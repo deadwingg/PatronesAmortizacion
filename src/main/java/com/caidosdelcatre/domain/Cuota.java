@@ -10,6 +10,7 @@ package com.caidosdelcatre.domain;
  * @author gomez
  */
 public class Cuota {
+
     private final int numero;
     private final double monto;
     private final double resto;
@@ -31,6 +32,10 @@ public class Cuota {
     public double getResto() {
         return resto;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Cuota numero:" + numero + ", monto:" + monto + ", resto:" + resto;
+    }
+
 }

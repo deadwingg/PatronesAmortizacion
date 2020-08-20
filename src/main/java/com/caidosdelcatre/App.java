@@ -9,6 +9,8 @@ import com.caidosdelcatre.domain.Prestamo;
 import com.caidosdelcatre.util.conversor.impl.ConversorConGson;
 import com.caidosdelcatre.fileoutput.GuardadorDePrestamos;
 import com.caidosdelcatre.domain.factory.PrestamoFactory;
+import com.caidosdelcatre.util.conversor.ConversorATexto;
+import com.caidosdelcatre.util.conversor.impl.ConversorATextoPlano;
 import com.caidosdelcatre.util.conversor.impl.ConversorConMustache;
 
 /**
@@ -36,14 +38,18 @@ public class App {
         Prestamo prestamo
                 = PrestamoFactory.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
 
-        ConversorConGson conversorGson = new ConversorConGson();
-        ConversorConMustache conversorMustache = new ConversorConMustache("cuotasAPagar");
+        ConversorATexto conversor = new ConversorConGson();
 
         //Output
-        GuardadorDePrestamos guardador = new GuardadorDePrestamos(conversorGson);
+        GuardadorDePrestamos guardador = new GuardadorDePrestamos(conversor);
         guardador.guardar("prestamos", prestamo);
 
-        guardador.setConversor(conversorMustache);
+        conversor = new ConversorConMustache("cuotasAPagar");
+        guardador.setConversor(conversor);
         guardador.guardar("prestamos", prestamo);
+
+        conversor = new ConversorATextoPlano();
+        System.out.println(conversor.obtenerRepresentacion(prestamo));
+
     }
 }
