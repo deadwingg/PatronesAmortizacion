@@ -3,30 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.representation.impl;
+package com.caidosdelcatre.util.conversor.impl;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.representation.PresentadorDePrestamo;
+import com.caidosdelcatre.util.conversor.ConversorATexto;
 import com.google.gson.Gson;
 
 /**
  *
  * @author gomez
  */
-public class PresentadorConGson implements PresentadorDePrestamo {
+public class ConversorConGson implements ConversorATexto {
 
     private Gson gson;
 
-    public PresentadorConGson() {
+    public ConversorConGson() {
         this.gson = new Gson();
     }
 
-    @Override
     public String obtenerRepresentacion(Prestamo prestamo) {
         return gson.toJson(prestamo);
     }
 
-    @Override
     public String obtenerExtension() {
         return ".json";
     }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.service;
+package com.caidosdelcatre.domain.amortization;
 
 import com.caidosdelcatre.domain.Cuota;
 import java.util.List;
@@ -16,5 +16,5 @@ public interface SistemaDeAmortizacion {
 
     List<Cuota> calcularCuotas(double capital, double interesMensual, int nroCuotas);
 
-    String getName();
+    String obtenerTipo();
 }

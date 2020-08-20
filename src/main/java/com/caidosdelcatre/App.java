@@ -6,16 +6,10 @@
 package com.caidosdelcatre;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.representation.PresentadorDePrestamo;
-import com.caidosdelcatre.representation.impl.PresentadorConTemplateMustache;
-import com.caidosdelcatre.service.factory.SistemaDeAmortizacionFactory;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
-import com.caidosdelcatre.service.SistemaDeAmortizacion;
+import com.caidosdelcatre.util.conversor.impl.ConversorConGson;
+import com.caidosdelcatre.fileoutput.GuardadorDePrestamos;
+import com.caidosdelcatre.domain.factory.PrestamoFactory;
+import com.caidosdelcatre.util.conversor.impl.ConversorConMustache;
 
 /**
  *
@@ -37,21 +31,19 @@ public class App {
 
         final double capital = Double.parseDouble(args[0]);
         final double interesAnual = Double.parseDouble(args[1]);
-        final String sistema = args[2];
-        SistemaDeAmortizacion sistemaDeAmortizacion
-                = SistemaDeAmortizacionFactory.obtenerSistema(sistema);
+        final String sistemaDeAmortizacion = args[2];
 
         Prestamo prestamo
-                = new Prestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
+                = PrestamoFactory.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
 
-        PresentadorDePrestamo presentador
-                = new PresentadorConTemplateMustache("cuotasAPagar");
-//                = new PresentadorConGson();
-        File path = new File("prestamo" + presentador.obtenerExtension());
-        try {
-            FileUtils.write(path, presentador.obtenerRepresentacion(prestamo), Charset.defaultCharset());
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ConversorConGson conversorGson = new ConversorConGson();
+        ConversorConMustache conversorMustache = new ConversorConMustache("cuotasAPagar");
+
+        //Output
+        GuardadorDePrestamos guardador = new GuardadorDePrestamos(conversorGson);
+        guardador.guardar("prestamos", prestamo);
+
+        guardador.setConversor(conversorMustache);
+        guardador.guardar("prestamos", prestamo);
     }
 }

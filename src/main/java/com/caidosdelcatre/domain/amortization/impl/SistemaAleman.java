@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.service.impl;
+package com.caidosdelcatre.domain.amortization.impl;
 
+import com.caidosdelcatre.domain.amortization.SistemaDeAmortizacion;
 import com.caidosdelcatre.domain.Cuota;
 import java.util.ArrayList;
 import java.util.List;
-import com.caidosdelcatre.service.SistemaDeAmortizacion;
 
 /**
  *
  * @author gomez
  */
 public class SistemaAleman implements SistemaDeAmortizacion {
+
+    private final String tipo = "Aleman";
 
     @Override
     public List<Cuota> calcularCuotas(double capital, double interes, int nroCuotas) {
@@ -32,8 +34,8 @@ public class SistemaAleman implements SistemaDeAmortizacion {
     }
 
     @Override
-    public String getName() {
-        return "Aleman";
+    public String obtenerTipo() {
+        return tipo;
     }
 
 }

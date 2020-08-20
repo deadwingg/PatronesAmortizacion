@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.representation;
+package com.caidosdelcatre.util.conversor;
 
 import com.caidosdelcatre.domain.Prestamo;
 
@@ -11,7 +11,7 @@ import com.caidosdelcatre.domain.Prestamo;
  *
  * @author gomez
  */
-public interface PresentadorDePrestamo {
+public interface ConversorATexto {
 
     public String obtenerRepresentacion(Prestamo prestamo);
 

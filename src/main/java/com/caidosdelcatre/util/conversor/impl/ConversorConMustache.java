@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.representation.impl;
+package com.caidosdelcatre.util.conversor.impl;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.representation.PresentadorDePrestamo;
+import com.caidosdelcatre.util.conversor.ConversorATexto;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 
@@ -19,17 +19,16 @@ import java.util.Map;
  *
  * @author gomez
  */
-public class PresentadorConTemplateMustache implements PresentadorDePrestamo {
+public class ConversorConMustache implements ConversorATexto {
 
     private String template;
     private Mustache mustache;
 
-    public PresentadorConTemplateMustache(String template) {
+    public ConversorConMustache(String template) {
         this.template = template;
         this.mustache = new DefaultMustacheFactory().compile(template + ".mustache");
     }
 
-    @Override
     public String obtenerRepresentacion(Prestamo prestamo) {
         Writer stringWriter = new StringWriter();
         Map<String, Object> context = new HashMap<>();
@@ -41,7 +40,6 @@ public class PresentadorConTemplateMustache implements PresentadorDePrestamo {
         return stringWriter.toString();
     }
 
-    @Override
     public String obtenerExtension() {
         return ".html";
     }

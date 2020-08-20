@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.service.factory;
+package com.caidosdelcatre.domain.factory;
 
-import com.caidosdelcatre.service.impl.SistemaAmericano;
-import com.caidosdelcatre.service.impl.SistemaFrances;
-import com.caidosdelcatre.service.impl.SistemaAleman;
-import com.caidosdelcatre.service.SistemaDeAmortizacion;
+import com.caidosdelcatre.domain.Prestamo;
+import com.caidosdelcatre.domain.amortization.SistemaDeAmortizacion;
+import com.caidosdelcatre.domain.amortization.impl.SistemaAleman;
+import com.caidosdelcatre.domain.amortization.impl.SistemaAmericano;
+import com.caidosdelcatre.domain.amortization.impl.SistemaFrances;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  *
  * @author gomez
  */
-public class SistemaDeAmortizacionFactory {
+public class PrestamoFactory {
 
     private static final Map<String, SistemaDeAmortizacion> sistemas;
 
@@ -27,12 +28,12 @@ public class SistemaDeAmortizacionFactory {
         sistemas.put("Frances", new SistemaFrances());
     }
 
-    public static SistemaDeAmortizacion obtenerSistema(String tipo) {
-        SistemaDeAmortizacion sistemaPedido = sistemas.get(tipo);
+    public static Prestamo obtenerPrestamo(double interesAnual, double capital, String tipoDeAmortizacion, int nroCuotas) {
+        SistemaDeAmortizacion sistemaPedido = sistemas.get(tipoDeAmortizacion);
         if (sistemaPedido == null) {
             throw new RuntimeException("Sistema no encontrado");
         } else {
-            return sistemaPedido;
+            return new Prestamo(interesAnual, capital, sistemaPedido, nroCuotas);
         }
     }
 }

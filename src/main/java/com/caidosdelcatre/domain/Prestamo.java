@@ -5,7 +5,7 @@
  */
 package com.caidosdelcatre.domain;
 
-import com.caidosdelcatre.service.SistemaDeAmortizacion;
+import com.caidosdelcatre.domain.amortization.SistemaDeAmortizacion;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,12 +39,8 @@ public class Prestamo {
         return capital;
     }
 
-    public SistemaDeAmortizacion getSistema() {
-        return sistema;
-    }
-
     public String getNombreDeSistema() {
-        return sistema.getName();
+        return sistema.obtenerTipo();
     }
 
 }
