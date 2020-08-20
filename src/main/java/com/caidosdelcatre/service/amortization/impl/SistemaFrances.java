@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.domain.amortization.impl;
+package com.caidosdelcatre.service.amortization.impl;
 
-import com.caidosdelcatre.domain.amortization.SistemaDeAmortizacion;
+import com.caidosdelcatre.service.amortization.SistemaDeAmortizacion;
 import com.caidosdelcatre.domain.Cuota;
-import com.caidosdelcatre.domain.amortization.Sistemas;
+import com.caidosdelcatre.service.amortization.Sistemas;
 import java.util.ArrayList;
 import java.util.List;
 

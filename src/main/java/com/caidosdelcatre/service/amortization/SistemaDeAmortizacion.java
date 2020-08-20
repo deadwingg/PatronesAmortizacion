@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.caidosdelcatre.domain.amortization;
+package com.caidosdelcatre.service.amortization;
 
 import com.caidosdelcatre.domain.Cuota;
 import java.util.List;

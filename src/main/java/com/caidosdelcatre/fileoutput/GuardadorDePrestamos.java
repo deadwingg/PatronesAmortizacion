@@ -20,13 +20,9 @@ import org.apache.commons.io.FileUtils;
  */
 public class GuardadorDePrestamos {
 
-    private ConversorATexto conversor;
+    ConversorATexto conversor;
 
     public GuardadorDePrestamos(ConversorATexto conversor) {
-        this.conversor = conversor;
-    }
-
-    public void setConversor(ConversorATexto conversor) {
         this.conversor = conversor;
     }
 
@@ -39,5 +35,9 @@ public class GuardadorDePrestamos {
         } catch (IOException ex) {
             Logger.getLogger(GuardadorDePrestamos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String obtenerString(Prestamo prestamo) {
+        return conversor.obtenerRepresentacion(prestamo);
     }
 }

@@ -6,11 +6,10 @@
 package com.caidosdelcatre;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.domain.amortization.Sistemas;
-import com.caidosdelcatre.fileoutput.GuardadorDePrestamos;
-import com.caidosdelcatre.domain.factory.PrestamoFactory;
+import com.caidosdelcatre.service.amortization.Sistemas;
+import com.caidosdelcatre.service.PrestamoService;
+import com.caidosdelcatre.service.factory.PrestamoServiceFactory;
 import com.caidosdelcatre.util.conversor.Conversores;
-import com.caidosdelcatre.util.conversor.factory.ConversorFactory;
 
 /**
  *
@@ -37,20 +36,14 @@ public class App {
 
         final double capital = Double.parseDouble(args[0]);
         final double interesAnual = Double.parseDouble(args[1]);
-        final String sistemaDeAmortizacion = args[2].trim().toUpperCase();
+        final String sistemaDeAmortizacion = args[2];
 
-        Prestamo prestamo
-                = PrestamoFactory.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
+        PrestamoService prestamoService
+                = PrestamoServiceFactory.getService(Conversores.JSONGSON);
 
+        Prestamo prestamo = prestamoService.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
         //Output
-        GuardadorDePrestamos guardador = new GuardadorDePrestamos(
-                ConversorFactory.obtenerConversor(Conversores.HTMLMUSTACHE));
-        guardador.guardar("prestamos", prestamo);
-
-        guardador.setConversor(ConversorFactory.obtenerConversor(Conversores.JSONGSON));
-        guardador.guardar("prestamos", prestamo);
-
-        System.out.println(ConversorFactory.obtenerConversor(Conversores.PLAIN).obtenerRepresentacion(prestamo));
-
+        prestamoService.guardarPrestamo("prestamos", prestamo);
+        prestamoService.mostrarPrestamo(prestamo);
     }
 }
