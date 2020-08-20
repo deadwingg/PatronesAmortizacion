@@ -18,13 +18,13 @@ public class Prestamo {
     private double interesAnual;
     private double capital;
     private List<Cuota> cuotas;
-    private transient SistemaDeAmortizacion sistema;
+    private SistemaDeAmortizacion sistema;
 
-    public Prestamo(double interesAnual, double capital, SistemaDeAmortizacion sistema) {
+    public Prestamo(double interesAnual, double capital, SistemaDeAmortizacion sistema, int nroCuotas) {
         this.interesAnual = interesAnual;
         this.capital = capital;
         this.sistema = sistema;
-        cuotas = sistema.obtenerCuotas(capital, interesAnual / 365 * 30 / 100);
+        cuotas = sistema.calcularCuotas(capital, interesAnual, nroCuotas);
     }
 
     public List<Cuota> getCuotas() {

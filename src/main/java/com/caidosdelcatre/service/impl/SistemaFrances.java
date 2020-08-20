@@ -17,16 +17,16 @@ import com.caidosdelcatre.service.SistemaDeAmortizacion;
 public class SistemaFrances implements SistemaDeAmortizacion {
 
     @Override
-    public List<Cuota> obtenerCuotas(double capital, double interes) {
+    public List<Cuota> calcularCuotas(double capital, double interes, int nroCuotas) {
         final double interesMensual = interes / 100 / 365 * 30;
 
         double valorCuota = capital
-                * (interesMensual * Math.pow(interesMensual + 1, 12)
-                / (Math.pow(interesMensual + 1, 12) - 1));
+                * (interesMensual * Math.pow(interesMensual + 1, nroCuotas)
+                / (Math.pow(interesMensual + 1, nroCuotas) - 1));
         double resto = valorCuota * 11;
 
         List<Cuota> cuotas = new ArrayList<>();
-        for (int i = 0; i < 12; i++, resto -= valorCuota) {
+        for (int i = 0; i < nroCuotas; i++, resto -= valorCuota) {
             cuotas.add(new Cuota(i + 1, valorCuota, resto));
         }
         return cuotas;

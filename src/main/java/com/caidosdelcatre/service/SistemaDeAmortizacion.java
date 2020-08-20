@@ -13,6 +13,8 @@ import java.util.List;
  * @author gomez
  */
 public interface SistemaDeAmortizacion {
-    List<Cuota> obtenerCuotas(double capital, double interesMensual);
+
+    List<Cuota> calcularCuotas(double capital, double interesMensual, int nroCuotas);
+
     String getName();
 }

@@ -19,18 +19,18 @@ import java.util.Map;
  *
  * @author gomez
  */
-public class PresentadorConTablaHTML implements PresentadorDePrestamo{
-    private String template;
-    private Prestamo prestamo;
+public class PresentadorConTemplateMustache implements PresentadorDePrestamo {
 
-    public PresentadorConTablaHTML(String template, Prestamo prestamo) {
+    private String template;
+    private Mustache mustache;
+
+    public PresentadorConTemplateMustache(String template) {
         this.template = template;
-        this.prestamo = prestamo;
+        this.mustache = new DefaultMustacheFactory().compile(template + ".mustache");
     }
 
     @Override
-    public String obtenerRepresentacion() {
-        Mustache mustache = new DefaultMustacheFactory().compile(template + ".mustache");
+    public String obtenerRepresentacion(Prestamo prestamo) {
         Writer stringWriter = new StringWriter();
         Map<String, Object> context = new HashMap<>();
         context.put("cuotas", prestamo.getCuotas());
@@ -40,6 +40,7 @@ public class PresentadorConTablaHTML implements PresentadorDePrestamo{
         mustache.execute(stringWriter, context);
         return stringWriter.toString();
     }
+
     @Override
     public String obtenerExtension() {
         return ".html";

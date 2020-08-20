@@ -5,11 +5,15 @@
  */
 package com.caidosdelcatre.representation;
 
+import com.caidosdelcatre.domain.Prestamo;
+
 /**
  *
  * @author gomez
  */
 public interface PresentadorDePrestamo {
-    public String obtenerRepresentacion();
+
+    public String obtenerRepresentacion(Prestamo prestamo);
+
     public String obtenerExtension();
 }

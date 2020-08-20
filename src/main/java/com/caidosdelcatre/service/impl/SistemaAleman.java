@@ -17,14 +17,16 @@ import com.caidosdelcatre.service.SistemaDeAmortizacion;
 public class SistemaAleman implements SistemaDeAmortizacion {
 
     @Override
-    public List<Cuota> obtenerCuotas(double capital, double interes) {
-        final double cuotaDeAmortizacion = capital / 12;
+    public List<Cuota> calcularCuotas(double capital, double interes, int nroCuotas) {
+        final double cuotaDeAmortizacion = capital / nroCuotas;
         final double interesMensual = interes / 100 / 365 * 30;
         double restoDeCapital = capital - cuotaDeAmortizacion;
-        double cuotaDeInteres = restoDeCapital * interesMensual;
+        double cuotaDeInteres = capital * interesMensual;
         List<Cuota> cuotas = new ArrayList<>();
-        for (int i = 0; i < 12; i++, restoDeCapital -= cuotaDeAmortizacion, cuotaDeInteres = restoDeCapital * interesMensual) {
+        for (int i = 0; i < nroCuotas; i++) {
             cuotas.add(new Cuota(i + 1, cuotaDeAmortizacion + cuotaDeInteres, restoDeCapital));
+            cuotaDeInteres = restoDeCapital * interesMensual;
+            restoDeCapital -= cuotaDeAmortizacion;
         }
         return cuotas;
     }

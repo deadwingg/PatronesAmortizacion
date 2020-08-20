@@ -13,18 +13,16 @@ import com.google.gson.Gson;
  *
  * @author gomez
  */
-public class PresentadorConJson implements PresentadorDePrestamo{
+public class PresentadorConGson implements PresentadorDePrestamo {
 
     private Gson gson;
-    private Prestamo prestamo;
 
-    public PresentadorConJson(Gson gson, Prestamo prestamo) {
-        this.gson = gson;
-        this.prestamo = prestamo;
+    public PresentadorConGson() {
+        this.gson = new Gson();
     }
-    
+
     @Override
-    public String obtenerRepresentacion() {
+    public String obtenerRepresentacion(Prestamo prestamo) {
         return gson.toJson(prestamo);
     }
 
@@ -32,5 +30,5 @@ public class PresentadorConJson implements PresentadorDePrestamo{
     public String obtenerExtension() {
         return ".json";
     }
-    
+
 }
