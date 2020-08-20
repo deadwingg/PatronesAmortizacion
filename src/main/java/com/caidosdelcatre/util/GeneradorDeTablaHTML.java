@@ -5,14 +5,13 @@
  */
 package com.caidosdelcatre.util;
 
-import com.caidosdelcatre.domain.Cuota;
+import com.caidosdelcatre.service.Credito;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,18 +20,21 @@ import java.util.Map;
  */
 public class GeneradorDeTablaHTML {
     private String template;
-    private List<Cuota> cuotas;
+    private Credito credito;
 
-    public GeneradorDeTablaHTML(String template, List<Cuota> cuotas) {
+    public GeneradorDeTablaHTML(String template, Credito credito) {
         this.template = template;
-        this.cuotas = cuotas;
+        this.credito = credito;
     }
 
     public String obtenerHTML() {
         Mustache mustache = new DefaultMustacheFactory().compile(template + ".mustache");
         Writer stringWriter = new StringWriter();
         Map<String, Object> context = new HashMap<>();
-        context.put("cuotas", cuotas);
+        context.put("cuotas", credito.obtenerCuotas());
+        context.put("sistema", credito.obtenerSistemaDeAmortizacion());
+        context.put("tasa", credito.obtenerInteresAnual());
+        context.put("capital", credito.obtenerCapital());
         mustache.execute(stringWriter, context);
         return stringWriter.toString();
     }
