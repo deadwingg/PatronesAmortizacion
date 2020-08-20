@@ -13,11 +13,11 @@ import com.google.gson.Gson;
  *
  * @author gomez
  */
-public class ConversorConGson implements ConversorATexto {
+public class ConversorJsonGson implements ConversorATexto {
 
     private Gson gson;
 
-    public ConversorConGson() {
+    public ConversorJsonGson() {
         this.gson = new Gson();
     }
 

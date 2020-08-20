@@ -6,12 +6,11 @@
 package com.caidosdelcatre;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.util.conversor.impl.ConversorConGson;
+import com.caidosdelcatre.domain.amortization.Sistemas;
 import com.caidosdelcatre.fileoutput.GuardadorDePrestamos;
 import com.caidosdelcatre.domain.factory.PrestamoFactory;
-import com.caidosdelcatre.util.conversor.ConversorATexto;
-import com.caidosdelcatre.util.conversor.impl.ConversorATextoPlano;
-import com.caidosdelcatre.util.conversor.impl.ConversorConMustache;
+import com.caidosdelcatre.util.conversor.Conversores;
+import com.caidosdelcatre.util.conversor.factory.ConversorFactory;
 
 /**
  *
@@ -23,6 +22,11 @@ public class App {
         int nroCuotas;
         if (args.length < 3) {
             System.out.println("uso java -jar <App.jar> <capital> <interes anual> <sistema> [<numero de cuotas>]");
+            System.out.print("Sistemas de amortizacion disponibles: ");
+            for (Sistemas s : Sistemas.values()) {
+                System.out.print(s.toString() + " ");
+            }
+            System.out.println();
             return;
         }
         if (args.length == 4) {
@@ -33,23 +37,20 @@ public class App {
 
         final double capital = Double.parseDouble(args[0]);
         final double interesAnual = Double.parseDouble(args[1]);
-        final String sistemaDeAmortizacion = args[2];
+        final String sistemaDeAmortizacion = args[2].trim().toUpperCase();
 
         Prestamo prestamo
                 = PrestamoFactory.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
 
-        ConversorATexto conversor = new ConversorConGson();
-
         //Output
-        GuardadorDePrestamos guardador = new GuardadorDePrestamos(conversor);
+        GuardadorDePrestamos guardador = new GuardadorDePrestamos(
+                ConversorFactory.obtenerConversor(Conversores.HTMLMUSTACHE));
         guardador.guardar("prestamos", prestamo);
 
-        conversor = new ConversorConMustache("cuotasAPagar");
-        guardador.setConversor(conversor);
+        guardador.setConversor(ConversorFactory.obtenerConversor(Conversores.JSONGSON));
         guardador.guardar("prestamos", prestamo);
 
-        conversor = new ConversorATextoPlano();
-        System.out.println(conversor.obtenerRepresentacion(prestamo));
+        System.out.println(ConversorFactory.obtenerConversor(Conversores.PLAIN).obtenerRepresentacion(prestamo));
 
     }
 }

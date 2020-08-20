@@ -19,14 +19,12 @@ import java.util.Map;
  *
  * @author gomez
  */
-public class ConversorConMustache implements ConversorATexto {
+public class ConversorHTMLMustache implements ConversorATexto {
 
-    private String template;
     private Mustache mustache;
 
-    public ConversorConMustache(String template) {
-        this.template = template;
-        this.mustache = new DefaultMustacheFactory().compile(template + ".mustache");
+    public ConversorHTMLMustache() {
+        this.mustache = new DefaultMustacheFactory().compile("cuotasAPagar.mustache");
     }
 
     public String obtenerRepresentacion(Prestamo prestamo) {
