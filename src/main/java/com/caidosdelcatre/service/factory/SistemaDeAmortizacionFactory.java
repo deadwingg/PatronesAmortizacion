@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 package com.caidosdelcatre.service.factory;
-import com.caidosdelcatre.service.CalculadorDeFinanciacion;
 import com.caidosdelcatre.service.impl.SistemaAmericano;
 import com.caidosdelcatre.service.impl.SistemaFrances;
 import com.caidosdelcatre.service.impl.SistemaAleman;
+import com.caidosdelcatre.service.SistemaDeAmortizacion;
 /**
  *
  * @author gomez
  */
 public class SistemaDeAmortizacionFactory {
-    public static CalculadorDeFinanciacion obtenerCalculador(String tipo){
+    public static SistemaDeAmortizacion obtenerCalculador(String tipo){
         switch(tipo){
             case "Americano":
                 return new SistemaAmericano();

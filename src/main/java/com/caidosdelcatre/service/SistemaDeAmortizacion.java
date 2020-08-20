@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author gomez
  */
-public interface CalculadorDeFinanciacion {
-    List<Cuota> obtenerCuotas(double capital, double interes);
+public interface SistemaDeAmortizacion {
+    List<Cuota> obtenerCuotas(double capital, double interesMensual);
+    String getName();
 }

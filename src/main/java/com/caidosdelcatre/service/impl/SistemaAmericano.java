@@ -6,30 +6,34 @@
 package com.caidosdelcatre.service.impl;
 
 import com.caidosdelcatre.domain.Cuota;
-import com.caidosdelcatre.service.CalculadorDeFinanciacion;
 import java.util.ArrayList;
 import java.util.List;
+import com.caidosdelcatre.service.SistemaDeAmortizacion;
 
 /**
  *
  * @author gomez
  */
-public class SistemaAmericano implements CalculadorDeFinanciacion {
+public class SistemaAmericano implements SistemaDeAmortizacion {
 
     @Override
     public List<Cuota> obtenerCuotas(double capital, double interes) {
-        double alicuota = interes/100/365*30;
+        double alicuota = interes / 100 / 365 * 30;
         double valorCuotaIntermedia = capital * alicuota;
         double valorCuotaFinal = capital + valorCuotaIntermedia;
         double resto = capital + valorCuotaIntermedia * 11;
-        
+
         List<Cuota> cuotas = new ArrayList();
-        for (int i = 0; i < 11; i++, resto-=valorCuotaIntermedia) {
-            cuotas.add(new Cuota(i+1, valorCuotaIntermedia, resto));
+        for (int i = 0; i < 11; i++, resto -= valorCuotaIntermedia) {
+            cuotas.add(new Cuota(i + 1, valorCuotaIntermedia, resto));
         }
-        
-        cuotas.add(new Cuota(12,valorCuotaFinal, resto-capital));
+
+        cuotas.add(new Cuota(12, valorCuotaFinal, resto - capital));
         return cuotas;
     }
-    
+
+    @Override
+    public String getName() {
+        return "Americano";
+    }
 }

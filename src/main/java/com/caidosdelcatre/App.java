@@ -5,44 +5,45 @@
  */
 package com.caidosdelcatre;
 
-import com.caidosdelcatre.domain.Cuota;
-import com.caidosdelcatre.util.GeneradorDeTablaHTML;
-import com.caidosdelcatre.service.CalculadorDeFinanciacion;
+import com.caidosdelcatre.domain.Prestamo;
+import com.caidosdelcatre.representation.PresentadorDePrestamo;
+import com.caidosdelcatre.representation.impl.PresentadorConJson;
 import com.caidosdelcatre.service.factory.SistemaDeAmortizacionFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import com.caidosdelcatre.service.SistemaDeAmortizacion;
+import com.google.gson.Gson;
 
 /**
  *
  * @author gomez
  */
 public class App {
+
     public static void main(String[] args) {
-        if(args.length != 3) {
+        if (args.length != 3) {
             System.out.println("uso java -jar <App.jar> <capital> <interes anual> <sistema>");
             return;
         }
-        final String sistema = args[2];
-        CalculadorDeFinanciacion calculador = 
-                SistemaDeAmortizacionFactory.obtenerCalculador(sistema);
-        
-        final double interesAnual = Double.parseDouble(args[1]);
+
         final double capital = Double.parseDouble(args[0]);
-        
-        List<Cuota> cuotasAPagar = 
-                calculador.obtenerCuotas(capital, interesAnual);
-        
-        GeneradorDeTablaHTML genHTML = 
-                new GeneradorDeTablaHTML("cuotasAPagar", cuotasAPagar);
-        
-        File path = new File(sistema + " - cuotas.html");
+        final double interesAnual = Double.parseDouble(args[1]);
+        final String sistema = args[2];
+        SistemaDeAmortizacion sistemaDeAmortizacion
+                = SistemaDeAmortizacionFactory.obtenerCalculador(sistema);
+
+        Prestamo prestamo = new Prestamo(interesAnual, capital, sistemaDeAmortizacion);
+
+        PresentadorDePrestamo presentador
+                //       = new PresentadorConTablaHTML("cuotasAPagar", prestamo);
+                = new PresentadorConJson(new Gson(), prestamo);
+        File path = new File("prestamo" + presentador.obtenerExtension());
         try {
-            FileUtils.write(path, genHTML.obtenerHTML(), Charset.defaultCharset());
+            FileUtils.write(path, presentador.obtenerRepresentacion(), Charset.defaultCharset());
         } catch (IOException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
