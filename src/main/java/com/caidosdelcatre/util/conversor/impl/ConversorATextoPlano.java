@@ -16,7 +16,7 @@ public class ConversorATextoPlano implements ConversorATexto {
 
     @Override
     public String obtenerRepresentacion(Prestamo prestamo) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("Prestamo con sistema ")
                 .append(prestamo.getNombreDeSistema())
                 .append(System.lineSeparator())

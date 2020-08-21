@@ -8,7 +8,6 @@ package com.caidosdelcatre.service.impl;
 import com.caidosdelcatre.domain.Cuota;
 import com.caidosdelcatre.domain.Prestamo;
 import com.caidosdelcatre.service.amortization.SistemaDeAmortizacion;
-import com.caidosdelcatre.service.amortization.Sistemas;
 import com.caidosdelcatre.fileoutput.GuardadorDePrestamos;
 import com.caidosdelcatre.service.amortization.factory.SistemaDeAmortizacionFactory;
 import com.caidosdelcatre.service.PrestamoService;
@@ -28,19 +27,21 @@ public class PrestamoServiceImpl implements PrestamoService {
 
     @Override
     public Prestamo obtenerPrestamo(double interesAnual, double capital, String tipoDeAmortizacion, int nroCuotas) {
-        final Sistemas tipoDeAmortizacionEnum = Sistemas
-                .valueOf(tipoDeAmortizacion.trim().toUpperCase());
         SistemaDeAmortizacion sistemaPedido
-                = SistemaDeAmortizacionFactory
-                        .getSistema(tipoDeAmortizacionEnum);
+                = SistemaDeAmortizacionFactory.getSistema(tipoDeAmortizacion.trim());
         List<Cuota> cuotas
                 = sistemaPedido.calcularCuotas(capital, interesAnual, nroCuotas);
-        return new Prestamo(interesAnual, capital, cuotas, nroCuotas, tipoDeAmortizacionEnum);
+        return new Prestamo(interesAnual, capital, cuotas, nroCuotas, tipoDeAmortizacion);
     }
 
     @Override
     public void guardarPrestamo(String nombreDeArchivo, Prestamo prestamo) {
         guardador.guardar(nombreDeArchivo, prestamo);
+    }
+
+    @Override
+    public String obtenerRepresentacion(Prestamo prestamo) {
+        return (guardador.representar(prestamo));
     }
 
 }

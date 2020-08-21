@@ -16,4 +16,6 @@ public interface PrestamoService {
     Prestamo obtenerPrestamo(double interesAnual, double capital, String tipoDeAmortizacion, int nroCuotas);
 
     void guardarPrestamo(String nombreDeArchivo, Prestamo prestamo);
+
+    String obtenerRepresentacion(Prestamo prestamo);
 }

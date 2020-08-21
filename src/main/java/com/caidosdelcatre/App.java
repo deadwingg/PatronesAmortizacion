@@ -6,10 +6,8 @@
 package com.caidosdelcatre;
 
 import com.caidosdelcatre.domain.Prestamo;
-import com.caidosdelcatre.service.amortization.Sistemas;
 import com.caidosdelcatre.service.PrestamoService;
 import com.caidosdelcatre.service.factory.PrestamoServiceFactory;
-import com.caidosdelcatre.util.conversor.Conversores;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +21,6 @@ public class App {
         int nroCuotas;
         if (args.length < 3) {
             System.out.println("uso java -jar <App.jar> <capital> <interes anual> <sistema> [<numero de cuotas>]");
-            System.out.print("Sistemas de amortizacion disponibles: ");
-            for (Sistemas s : Sistemas.values()) {
-                System.out.print(s.toString() + " ");
-            }
-            System.out.println();
             return;
         }
         if (args.length == 4) {
@@ -40,8 +33,8 @@ public class App {
         final double interesAnual = Double.parseDouble(args[1]);
         final String sistemaDeAmortizacion = args[2];
 
-        List<Conversores> conversoresAUtilizar
-                = Arrays.asList(Conversores.JSONGSON, Conversores.HTMLMUSTACHE, Conversores.PLAIN);
+        List<String> conversoresAUtilizar
+                = Arrays.asList("JSONGSON", "HTMLMUSTACHE", "TEXTOPLANO");
 
         PrestamoService prestamoService
                 = PrestamoServiceFactory.getService(conversoresAUtilizar);
@@ -49,5 +42,6 @@ public class App {
         Prestamo prestamo = prestamoService.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
         //Output
         prestamoService.guardarPrestamo("prestamos", prestamo);
+        System.out.println(prestamoService.obtenerRepresentacion(prestamo));
     }
 }

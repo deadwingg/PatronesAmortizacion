@@ -24,9 +24,10 @@ public class ConversorHTMLMustache implements ConversorATexto {
     private Mustache mustache;
 
     public ConversorHTMLMustache() {
-        this.mustache = new DefaultMustacheFactory().compile("cuotasAPagar.mustache");
+        this.mustache = new DefaultMustacheFactory().compile("prestamos.mustache");
     }
 
+    @Override
     public String obtenerRepresentacion(Prestamo prestamo) {
         Writer stringWriter = new StringWriter();
         Map<String, Object> context = new HashMap<>();
@@ -38,6 +39,7 @@ public class ConversorHTMLMustache implements ConversorATexto {
         return stringWriter.toString();
     }
 
+    @Override
     public String obtenerExtension() {
         return ".html";
     }

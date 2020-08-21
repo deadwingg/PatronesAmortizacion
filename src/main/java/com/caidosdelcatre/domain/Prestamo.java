@@ -5,7 +5,6 @@
  */
 package com.caidosdelcatre.domain;
 
-import com.caidosdelcatre.service.amortization.Sistemas;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,12 +14,12 @@ import java.util.List;
  */
 public class Prestamo {
 
-    Sistemas sistema;
+    private String sistema;
     private double interesAnual;
     private double capital;
     private List<Cuota> cuotas;
 
-    public Prestamo(double interesAnual, double capital, List<Cuota> cuotas, int nroCuotas, Sistemas tipo) {
+    public Prestamo(double interesAnual, double capital, List<Cuota> cuotas, int nroCuotas, String tipo) {
         this.interesAnual = interesAnual;
         this.capital = capital;
         this.cuotas = cuotas;
@@ -40,6 +39,6 @@ public class Prestamo {
     }
 
     public String getNombreDeSistema() {
-        return sistema.getName();
+        return sistema;
     }
 }

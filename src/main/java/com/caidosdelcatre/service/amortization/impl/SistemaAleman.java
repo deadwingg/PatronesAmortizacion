@@ -7,7 +7,6 @@ package com.caidosdelcatre.service.amortization.impl;
 
 import com.caidosdelcatre.service.amortization.SistemaDeAmortizacion;
 import com.caidosdelcatre.domain.Cuota;
-import com.caidosdelcatre.service.amortization.Sistemas;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
  */
 public class SistemaAleman implements SistemaDeAmortizacion {
 
-    private final String tipo = Sistemas.ALEMAN.getName();
+    private final String tipo = "ALEMAN";
 
     @Override
     public List<Cuota> calcularCuotas(double capital, double interes, int nroCuotas) {

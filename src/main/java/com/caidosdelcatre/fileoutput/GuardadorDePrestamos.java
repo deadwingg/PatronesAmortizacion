@@ -43,4 +43,17 @@ public class GuardadorDePrestamos {
             }
         });
     }
+
+    public String representar(Prestamo p) {
+        StringBuilder buffer = new StringBuilder();
+
+        conversores.forEach((conversor) -> {
+            buffer.append("\n-----------------\t")
+                    .append(conversor.obtenerExtension())
+                    .append("\t---------------------\n")
+                    .append(conversor.obtenerRepresentacion(p));
+        });
+
+        return buffer.toString();
+    }
 }

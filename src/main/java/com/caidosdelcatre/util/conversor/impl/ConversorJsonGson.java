@@ -8,6 +8,7 @@ package com.caidosdelcatre.util.conversor.impl;
 import com.caidosdelcatre.domain.Prestamo;
 import com.caidosdelcatre.util.conversor.ConversorATexto;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ConversorJsonGson implements ConversorATexto {
     private Gson gson;
 
     public ConversorJsonGson() {
-        this.gson = new Gson();
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public String obtenerRepresentacion(Prestamo prestamo) {
