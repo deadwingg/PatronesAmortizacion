@@ -10,6 +10,8 @@ import com.caidosdelcatre.service.amortization.Sistemas;
 import com.caidosdelcatre.service.PrestamoService;
 import com.caidosdelcatre.service.factory.PrestamoServiceFactory;
 import com.caidosdelcatre.util.conversor.Conversores;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -38,12 +40,14 @@ public class App {
         final double interesAnual = Double.parseDouble(args[1]);
         final String sistemaDeAmortizacion = args[2];
 
+        List<Conversores> conversoresAUtilizar
+                = Arrays.asList(Conversores.JSONGSON, Conversores.HTMLMUSTACHE, Conversores.PLAIN);
+
         PrestamoService prestamoService
-                = PrestamoServiceFactory.getService(Conversores.JSONGSON);
+                = PrestamoServiceFactory.getService(conversoresAUtilizar);
 
         Prestamo prestamo = prestamoService.obtenerPrestamo(interesAnual, capital, sistemaDeAmortizacion, nroCuotas);
         //Output
         prestamoService.guardarPrestamo("prestamos", prestamo);
-        prestamoService.mostrarPrestamo(prestamo);
     }
 }

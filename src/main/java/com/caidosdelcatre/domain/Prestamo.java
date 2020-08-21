@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class Prestamo {
 
+    Sistemas sistema;
     private double interesAnual;
     private double capital;
     private List<Cuota> cuotas;
-    Sistemas sistema;
 
     public Prestamo(double interesAnual, double capital, List<Cuota> cuotas, int nroCuotas, Sistemas tipo) {
         this.interesAnual = interesAnual;

@@ -43,9 +43,4 @@ public class PrestamoServiceImpl implements PrestamoService {
         guardador.guardar(nombreDeArchivo, prestamo);
     }
 
-    @Override
-    public void mostrarPrestamo(Prestamo prestamo) {
-        System.out.println(guardador.obtenerString(prestamo));
-    }
-
 }
